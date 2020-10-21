@@ -21,7 +21,7 @@ class: center, middle, inverse, title-slide
 # An overview of dplyr
 ## Daryn Ramsden
 ### thisisdaryn at gmail dot com
-### last updated: 2020-10-20
+### last updated: 2020-10-21
 
 ---
 
@@ -202,19 +202,21 @@ chinstrap
 
 ```
 # A tibble: 68 x 8
-   species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
- 1 Chinst… Dream            46.5          17.9              192        3500
- 2 Chinst… Dream            50            19.5              196        3900
- 3 Chinst… Dream            51.3          19.2              193        3650
- 4 Chinst… Dream            45.4          18.7              188        3525
- 5 Chinst… Dream            52.7          19.8              197        3725
- 6 Chinst… Dream            45.2          17.8              198        3950
- 7 Chinst… Dream            46.1          18.2              178        3250
- 8 Chinst… Dream            51.3          18.2              197        3750
- 9 Chinst… Dream            46            18.9              195        4150
-10 Chinst… Dream            51.3          19.9              198        3700
-# … with 58 more rows, and 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;
+   species island bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Chinst… Dream            46.5          17.9
+ 2 Chinst… Dream            50            19.5
+ 3 Chinst… Dream            51.3          19.2
+ 4 Chinst… Dream            45.4          18.7
+ 5 Chinst… Dream            52.7          19.8
+ 6 Chinst… Dream            45.2          17.8
+ 7 Chinst… Dream            46.1          18.2
+ 8 Chinst… Dream            51.3          18.2
+ 9 Chinst… Dream            46            18.9
+10 Chinst… Dream            51.3          19.9
+# … with 58 more rows, and 4 more variables:
+#   flipper_length_mm &lt;int&gt;, body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+#   year &lt;int&gt;
 ```
 
 
@@ -257,19 +259,21 @@ penguins_4k
 
 ```
 # A tibble: 177 x 8
-   species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torge…           39.2          19.6              195        4675
- 2 Adelie  Torge…           42            20.2              190        4250
- 3 Adelie  Torge…           34.6          21.1              198        4400
- 4 Adelie  Torge…           42.5          20.7              197        4500
- 5 Adelie  Torge…           46            21.5              194        4200
- 6 Adelie  Dream            39.2          21.1              196        4150
- 7 Adelie  Dream            39.8          19.1              184        4650
- 8 Adelie  Dream            44.1          19.7              196        4400
- 9 Adelie  Dream            39.6          18.8              190        4600
-10 Adelie  Dream            42.3          21.2              191        4150
-# … with 167 more rows, and 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;
+   species island bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torge…           39.2          19.6
+ 2 Adelie  Torge…           42            20.2
+ 3 Adelie  Torge…           34.6          21.1
+ 4 Adelie  Torge…           42.5          20.7
+ 5 Adelie  Torge…           46            21.5
+ 6 Adelie  Dream            39.2          21.1
+ 7 Adelie  Dream            39.8          19.1
+ 8 Adelie  Dream            44.1          19.7
+ 9 Adelie  Dream            39.6          18.8
+10 Adelie  Dream            42.3          21.2
+# … with 167 more rows, and 4 more variables:
+#   flipper_length_mm &lt;int&gt;, body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+#   year &lt;int&gt;
 ```
 
 
@@ -535,19 +539,19 @@ penguins %&gt;% select(where(is.numeric))
 
 ```
 # A tibble: 344 x 5
-   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g  year
-            &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;int&gt;
- 1           39.1          18.7               181        3750  2007
- 2           39.5          17.4               186        3800  2007
- 3           40.3          18                 195        3250  2007
- 4           NA            NA                  NA          NA  2007
- 5           36.7          19.3               193        3450  2007
- 6           39.3          20.6               190        3650  2007
- 7           38.9          17.8               181        3625  2007
- 8           39.2          19.6               195        4675  2007
- 9           34.1          18.1               193        3475  2007
-10           42            20.2               190        4250  2007
-# … with 334 more rows
+   bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+            &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+ 1           39.1          18.7              181        3750
+ 2           39.5          17.4              186        3800
+ 3           40.3          18                195        3250
+ 4           NA            NA                 NA          NA
+ 5           36.7          19.3              193        3450
+ 6           39.3          20.6              190        3650
+ 7           38.9          17.8              181        3625
+ 8           39.2          19.6              195        4675
+ 9           34.1          18.1              193        3475
+10           42            20.2              190        4250
+# … with 334 more rows, and 1 more variable: year &lt;int&gt;
 ```
 
 
@@ -626,15 +630,16 @@ head(penguin_extra)
 
 ```
 # A tibble: 6 x 9
-  species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-  &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
-1 Adelie  Torge…           39.1          18.7              181        3750
-2 Adelie  Torge…           39.5          17.4              186        3800
-3 Adelie  Torge…           40.3          18                195        3250
-4 Adelie  Torge…           NA            NA                 NA          NA
-5 Adelie  Torge…           36.7          19.3              193        3450
-6 Adelie  Torge…           39.3          20.6              190        3650
-# … with 3 more variables: sex &lt;fct&gt;, year &lt;int&gt;, above_4kg &lt;lgl&gt;
+  species island bill_length_mm bill_depth_mm flipper_length_…
+  &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;
+1 Adelie  Torge…           39.1          18.7              181
+2 Adelie  Torge…           39.5          17.4              186
+3 Adelie  Torge…           40.3          18                195
+4 Adelie  Torge…           NA            NA                 NA
+5 Adelie  Torge…           36.7          19.3              193
+6 Adelie  Torge…           39.3          20.6              190
+# … with 4 more variables: body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+#   year &lt;int&gt;, above_4kg &lt;lgl&gt;
 ```
 
 
@@ -761,15 +766,16 @@ head(gr_penguins)
 ```
 # A tibble: 6 x 8
 # Groups:   island, species [1]
-  species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-  &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
-1 Adelie  Torge…           39.1          18.7              181        3750
-2 Adelie  Torge…           39.5          17.4              186        3800
-3 Adelie  Torge…           40.3          18                195        3250
-4 Adelie  Torge…           NA            NA                 NA          NA
-5 Adelie  Torge…           36.7          19.3              193        3450
-6 Adelie  Torge…           39.3          20.6              190        3650
-# … with 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;
+  species island bill_length_mm bill_depth_mm flipper_length_…
+  &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;
+1 Adelie  Torge…           39.1          18.7              181
+2 Adelie  Torge…           39.5          17.4              186
+3 Adelie  Torge…           40.3          18                195
+4 Adelie  Torge…           NA            NA                 NA
+5 Adelie  Torge…           36.7          19.3              193
+6 Adelie  Torge…           39.3          20.6              190
+# … with 3 more variables: body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+#   year &lt;int&gt;
 ```
 
 
@@ -922,20 +928,21 @@ numbered_penguins
 ```
 # A tibble: 344 x 9
 # Groups:   species [3]
-   species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torge…           39.1          18.7              181        3750
- 2 Adelie  Torge…           39.5          17.4              186        3800
- 3 Adelie  Torge…           40.3          18                195        3250
- 4 Adelie  Torge…           NA            NA                 NA          NA
- 5 Adelie  Torge…           36.7          19.3              193        3450
- 6 Adelie  Torge…           39.3          20.6              190        3650
- 7 Adelie  Torge…           38.9          17.8              181        3625
- 8 Adelie  Torge…           39.2          19.6              195        4675
- 9 Adelie  Torge…           34.1          18.1              193        3475
-10 Adelie  Torge…           42            20.2              190        4250
-# … with 334 more rows, and 3 more variables: sex &lt;fct&gt;, year &lt;int&gt;,
-#   penguin_num &lt;int&gt;
+   species island bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torge…           39.1          18.7
+ 2 Adelie  Torge…           39.5          17.4
+ 3 Adelie  Torge…           40.3          18  
+ 4 Adelie  Torge…           NA            NA  
+ 5 Adelie  Torge…           36.7          19.3
+ 6 Adelie  Torge…           39.3          20.6
+ 7 Adelie  Torge…           38.9          17.8
+ 8 Adelie  Torge…           39.2          19.6
+ 9 Adelie  Torge…           34.1          18.1
+10 Adelie  Torge…           42            20.2
+# … with 334 more rows, and 5 more variables:
+#   flipper_length_mm &lt;int&gt;, body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+#   year &lt;int&gt;, penguin_num &lt;int&gt;
 ```
 
 
@@ -960,19 +967,20 @@ penguins_different
 
 ```
 # A tibble: 344 x 8
-   species island bill_length bill_depth flipper_length_… body_mass_g sex  
-   &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt;      &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
- 1 Adelie  Torge…        39.1       18.7              181        3750 male 
- 2 Adelie  Torge…        39.5       17.4              186        3800 fema…
- 3 Adelie  Torge…        40.3       18                195        3250 fema…
- 4 Adelie  Torge…        NA         NA                 NA          NA &lt;NA&gt; 
- 5 Adelie  Torge…        36.7       19.3              193        3450 fema…
- 6 Adelie  Torge…        39.3       20.6              190        3650 male 
- 7 Adelie  Torge…        38.9       17.8              181        3625 fema…
- 8 Adelie  Torge…        39.2       19.6              195        4675 male 
- 9 Adelie  Torge…        34.1       18.1              193        3475 &lt;NA&gt; 
-10 Adelie  Torge…        42         20.2              190        4250 &lt;NA&gt; 
-# … with 334 more rows, and 1 more variable: year &lt;int&gt;
+   species island bill_length bill_depth flipper_length_…
+   &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt;      &lt;dbl&gt;            &lt;int&gt;
+ 1 Adelie  Torge…        39.1       18.7              181
+ 2 Adelie  Torge…        39.5       17.4              186
+ 3 Adelie  Torge…        40.3       18                195
+ 4 Adelie  Torge…        NA         NA                 NA
+ 5 Adelie  Torge…        36.7       19.3              193
+ 6 Adelie  Torge…        39.3       20.6              190
+ 7 Adelie  Torge…        38.9       17.8              181
+ 8 Adelie  Torge…        39.2       19.6              195
+ 9 Adelie  Torge…        34.1       18.1              193
+10 Adelie  Torge…        42         20.2              190
+# … with 334 more rows, and 3 more variables:
+#   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
 ```
 
 
@@ -992,19 +1000,21 @@ penguins %&gt;% rename_with(toupper)
 
 ```
 # A tibble: 344 x 8
-   SPECIES ISLAND BILL_LENGTH_MM BILL_DEPTH_MM FLIPPER_LENGTH_… BODY_MASS_G
-   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torge…           39.1          18.7              181        3750
- 2 Adelie  Torge…           39.5          17.4              186        3800
- 3 Adelie  Torge…           40.3          18                195        3250
- 4 Adelie  Torge…           NA            NA                 NA          NA
- 5 Adelie  Torge…           36.7          19.3              193        3450
- 6 Adelie  Torge…           39.3          20.6              190        3650
- 7 Adelie  Torge…           38.9          17.8              181        3625
- 8 Adelie  Torge…           39.2          19.6              195        4675
- 9 Adelie  Torge…           34.1          18.1              193        3475
-10 Adelie  Torge…           42            20.2              190        4250
-# … with 334 more rows, and 2 more variables: SEX &lt;fct&gt;, YEAR &lt;int&gt;
+   SPECIES ISLAND BILL_LENGTH_MM BILL_DEPTH_MM
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torge…           39.1          18.7
+ 2 Adelie  Torge…           39.5          17.4
+ 3 Adelie  Torge…           40.3          18  
+ 4 Adelie  Torge…           NA            NA  
+ 5 Adelie  Torge…           36.7          19.3
+ 6 Adelie  Torge…           39.3          20.6
+ 7 Adelie  Torge…           38.9          17.8
+ 8 Adelie  Torge…           39.2          19.6
+ 9 Adelie  Torge…           34.1          18.1
+10 Adelie  Torge…           42            20.2
+# … with 334 more rows, and 4 more variables:
+#   FLIPPER_LENGTH_MM &lt;int&gt;, BODY_MASS_G &lt;int&gt;, SEX &lt;fct&gt;,
+#   YEAR &lt;int&gt;
 ```
 
 
@@ -1018,19 +1028,21 @@ penguins %&gt;% rename_with(toupper, where(is.numeric))
 
 ```
 # A tibble: 344 x 8
-   species island BILL_LENGTH_MM BILL_DEPTH_MM FLIPPER_LENGTH_… BODY_MASS_G
-   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torge…           39.1          18.7              181        3750
- 2 Adelie  Torge…           39.5          17.4              186        3800
- 3 Adelie  Torge…           40.3          18                195        3250
- 4 Adelie  Torge…           NA            NA                 NA          NA
- 5 Adelie  Torge…           36.7          19.3              193        3450
- 6 Adelie  Torge…           39.3          20.6              190        3650
- 7 Adelie  Torge…           38.9          17.8              181        3625
- 8 Adelie  Torge…           39.2          19.6              195        4675
- 9 Adelie  Torge…           34.1          18.1              193        3475
-10 Adelie  Torge…           42            20.2              190        4250
-# … with 334 more rows, and 2 more variables: sex &lt;fct&gt;, YEAR &lt;int&gt;
+   species island BILL_LENGTH_MM BILL_DEPTH_MM
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torge…           39.1          18.7
+ 2 Adelie  Torge…           39.5          17.4
+ 3 Adelie  Torge…           40.3          18  
+ 4 Adelie  Torge…           NA            NA  
+ 5 Adelie  Torge…           36.7          19.3
+ 6 Adelie  Torge…           39.3          20.6
+ 7 Adelie  Torge…           38.9          17.8
+ 8 Adelie  Torge…           39.2          19.6
+ 9 Adelie  Torge…           34.1          18.1
+10 Adelie  Torge…           42            20.2
+# … with 334 more rows, and 4 more variables:
+#   FLIPPER_LENGTH_MM &lt;int&gt;, BODY_MASS_G &lt;int&gt;, sex &lt;fct&gt;,
+#   YEAR &lt;int&gt;
 ```
 
 
@@ -1072,19 +1084,20 @@ penguins %&gt;% relocate(where(is.factor))
 
 ```
 # A tibble: 344 x 8
-   species island sex   bill_length_mm bill_depth_mm flipper_length_…
-   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;          &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;
- 1 Adelie  Torge… male            39.1          18.7              181
- 2 Adelie  Torge… fema…           39.5          17.4              186
- 3 Adelie  Torge… fema…           40.3          18                195
- 4 Adelie  Torge… &lt;NA&gt;            NA            NA                 NA
- 5 Adelie  Torge… fema…           36.7          19.3              193
- 6 Adelie  Torge… male            39.3          20.6              190
- 7 Adelie  Torge… fema…           38.9          17.8              181
- 8 Adelie  Torge… male            39.2          19.6              195
- 9 Adelie  Torge… &lt;NA&gt;            34.1          18.1              193
-10 Adelie  Torge… &lt;NA&gt;            42            20.2              190
-# … with 334 more rows, and 2 more variables: body_mass_g &lt;int&gt;, year &lt;int&gt;
+   species island sex   bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;          &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torge… male            39.1          18.7
+ 2 Adelie  Torge… fema…           39.5          17.4
+ 3 Adelie  Torge… fema…           40.3          18  
+ 4 Adelie  Torge… &lt;NA&gt;            NA            NA  
+ 5 Adelie  Torge… fema…           36.7          19.3
+ 6 Adelie  Torge… male            39.3          20.6
+ 7 Adelie  Torge… fema…           38.9          17.8
+ 8 Adelie  Torge… male            39.2          19.6
+ 9 Adelie  Torge… &lt;NA&gt;            34.1          18.1
+10 Adelie  Torge… &lt;NA&gt;            42            20.2
+# … with 334 more rows, and 3 more variables:
+#   flipper_length_mm &lt;int&gt;, body_mass_g &lt;int&gt;, year &lt;int&gt;
 ```
 
 
@@ -1102,19 +1115,20 @@ penguins %&gt;% relocate(contains("bill"), .after = body_mass_g)
 
 ```
 # A tibble: 344 x 8
-   species island flipper_length_… body_mass_g bill_length_mm bill_depth_mm
-   &lt;fct&gt;   &lt;fct&gt;             &lt;int&gt;       &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;
- 1 Adelie  Torge…              181        3750           39.1          18.7
- 2 Adelie  Torge…              186        3800           39.5          17.4
- 3 Adelie  Torge…              195        3250           40.3          18  
- 4 Adelie  Torge…               NA          NA           NA            NA  
- 5 Adelie  Torge…              193        3450           36.7          19.3
- 6 Adelie  Torge…              190        3650           39.3          20.6
- 7 Adelie  Torge…              181        3625           38.9          17.8
- 8 Adelie  Torge…              195        4675           39.2          19.6
- 9 Adelie  Torge…              193        3475           34.1          18.1
-10 Adelie  Torge…              190        4250           42            20.2
-# … with 334 more rows, and 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;
+   species island flipper_length_… body_mass_g bill_length_mm
+   &lt;fct&gt;   &lt;fct&gt;             &lt;int&gt;       &lt;int&gt;          &lt;dbl&gt;
+ 1 Adelie  Torge…              181        3750           39.1
+ 2 Adelie  Torge…              186        3800           39.5
+ 3 Adelie  Torge…              195        3250           40.3
+ 4 Adelie  Torge…               NA          NA           NA  
+ 5 Adelie  Torge…              193        3450           36.7
+ 6 Adelie  Torge…              190        3650           39.3
+ 7 Adelie  Torge…              181        3625           38.9
+ 8 Adelie  Torge…              195        4675           39.2
+ 9 Adelie  Torge…              193        3475           34.1
+10 Adelie  Torge…              190        4250           42  
+# … with 334 more rows, and 3 more variables:
+#   bill_depth_mm &lt;dbl&gt;, sex &lt;fct&gt;, year &lt;int&gt;
 ```
 
 
@@ -1157,11 +1171,12 @@ penguins %&gt;% group_by(species) %&gt;%
 
 ```
 # A tibble: 3 x 5
-  species   avg_bill_length avg_bill_depth avg_fl_length_mm avg_body_mass_g
-  &lt;fct&gt;               &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
-1 Adelie               38.8           18.3             190.           3701.
-2 Chinstrap            48.8           18.4             196.           3733.
-3 Gentoo               47.5           15.0             217.           5076.
+  species avg_bill_length avg_bill_depth avg_fl_length_mm
+  &lt;fct&gt;             &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;
+1 Adelie             38.8           18.3             190.
+2 Chinst…            48.8           18.4             196.
+3 Gentoo             47.5           15.0             217.
+# … with 1 more variable: avg_body_mass_g &lt;dbl&gt;
 ```
 
 
@@ -1197,11 +1212,12 @@ penguins %&gt;% group_by(species) %&gt;%
 
 ```
 # A tibble: 3 x 5
-  species   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-  &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-1 Adelie              38.8          18.3              190.       3701.
-2 Chinstrap           48.8          18.4              196.       3733.
-3 Gentoo              47.5          15.0              217.       5076.
+  species bill_length_mm bill_depth_mm flipper_length_…
+  &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+1 Adelie            38.8          18.3             190.
+2 Chinst…           48.8          18.4             196.
+3 Gentoo            47.5          15.0             217.
+# … with 1 more variable: body_mass_g &lt;dbl&gt;
 ```
 
 
@@ -1238,12 +1254,13 @@ penguins %&gt;%
 
 ```
 # A tibble: 3 x 9
-  island bill_length_mm bill_depth_mm flipper_length_… body_mass_g  year
-  &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
-1 Biscoe           45.3          15.9             210.       4716. 2008.
-2 Dream            44.2          18.3             193.       3713. 2008.
-3 Torge…           39.0          18.4             191.       3706. 2008.
-# … with 3 more variables: species &lt;int&gt;, sex &lt;int&gt;, n &lt;int&gt;
+  island bill_length_mm bill_depth_mm flipper_length_…
+  &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+1 Biscoe           45.3          15.9             210.
+2 Dream            44.2          18.3             193.
+3 Torge…           39.0          18.4             191.
+# … with 5 more variables: body_mass_g &lt;dbl&gt;, year &lt;dbl&gt;,
+#   species &lt;int&gt;, sex &lt;int&gt;, n &lt;int&gt;
 ```
 
 
@@ -1349,19 +1366,21 @@ penguins_rescaled
 
 ```
 # A tibble: 344 x 8
-   species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;
- 1 Adelie  Torge…         0.255          0.667            0.153       0.292
- 2 Adelie  Torge…         0.269          0.512            0.237       0.306
- 3 Adelie  Torge…         0.298          0.583            0.390       0.153
- 4 Adelie  Torge…        NA             NA               NA          NA    
- 5 Adelie  Torge…         0.167          0.738            0.356       0.208
- 6 Adelie  Torge…         0.262          0.893            0.305       0.264
- 7 Adelie  Torge…         0.247          0.560            0.153       0.257
- 8 Adelie  Torge…         0.258          0.774            0.390       0.549
- 9 Adelie  Torge…         0.0727         0.595            0.356       0.215
-10 Adelie  Torge…         0.360          0.845            0.305       0.431
-# … with 334 more rows, and 2 more variables: sex &lt;fct&gt;, year &lt;dbl&gt;
+   species island bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torge…         0.255          0.667
+ 2 Adelie  Torge…         0.269          0.512
+ 3 Adelie  Torge…         0.298          0.583
+ 4 Adelie  Torge…        NA             NA    
+ 5 Adelie  Torge…         0.167          0.738
+ 6 Adelie  Torge…         0.262          0.893
+ 7 Adelie  Torge…         0.247          0.560
+ 8 Adelie  Torge…         0.258          0.774
+ 9 Adelie  Torge…         0.0727         0.595
+10 Adelie  Torge…         0.360          0.845
+# … with 334 more rows, and 4 more variables:
+#   flipper_length_mm &lt;dbl&gt;, body_mass_g &lt;dbl&gt;, sex &lt;fct&gt;,
+#   year &lt;dbl&gt;
 ```
 
 
