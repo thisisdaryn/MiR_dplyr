@@ -1,0 +1,1040 @@
+---
+title: "An overview of dplyr"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: libs/switch-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      after_body: libs/toggle.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      comment = "")
+xaringanExtra::use_tile_view()
+#xaringanExtra::use_panelset()
+xaringanExtra::use_webcam()
+#xaringanExtra::use_editable()
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         
+  mute_unhighlighted_code = TRUE  
+)
+
+#after installing these packages, please comment ount. 
+#install.packages("palmerpenguins")
+#install.packages("kableExtra")
+#install.packages("xaringan")
+#install.packages("devtools")
+#devtools::install_github("gadenbuie/xaringanExtra")
+
+library(xaringan)
+library(xaringanExtra)
+library(palmerpenguins)
+library(dplyr)
+library(kableExtra)
+```
+
+
+
+### The data we will be using 
+
+
+```{r}
+#install.packages("palmerpenguins")
+library(palmerpenguins)
+```
+
+```{r echo = FALSE, eval = FALSE, fig.cap= "Palmer penguins data table."}
+DT::datatable(penguins, 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE, 
+                         paging=TRUE,
+                         fixedHeader=TRUE,
+                         pageLength = 15))
+```
+
+```{r echo = FALSE}
+library(rmarkdown)
+paged_table(penguins)
+```
+
+
+
+
+---
+### What do these variables represent?
+
+Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network.
+
+  * *species*: *Adelie*, *Chinstrap* or *Gentoo*
+  
+  * *island*: *Biscoe*, *Dream* or *Torgersen* (factor)
+  
+  * *bill_length_mm*: bill length mm (numeric) 
+  
+  * *bill_depth_mm*: bill depth in mm (numeric)      
+  
+  * *flipper_length_mm*: flipper length in mm (numeric)
+  
+  * *body_mass_g*: body mass in grams (numeric)
+  
+  * *sex*: *male* or *female* (factor)        
+  
+  * *year*: 2007, 2008 or 2009
+  
+  
+---
+## dplyr: a package for data manipulation
+
+The data you get is almost in the form you want
+
+--
+
+`dplyr` is an R package that encapsulates many common data manipulation tasks
+
+--
+
+Sometimes you want to: 
+--
+
+  * keep only some of the rows
+
+--
+
+  * keep only some of the columns
+
+--
+
+  * adds new columns
+
+--
+
+  * sort data
+  
+--
+
+  * provide summary statistics
+
+--
+
+`dplyr` has functions for each of these (and many others)
+
+
+---
+## Using `dplyr`
+
+#### How do you install `dplyr`?
+
+```{r eval = FALSE, fig.cap = "A call to the install.packages function illustrating how to install the dplyr package from CRAN"}
+install.packages("dplyr")
+# or install.packages("tidyverse)
+```
+
+
+#### How do you use `dplyr`?
+
+```{r fig.cap = "A call to the library function to load the dplyr package"}
+library(dplyr)
+# or library(tidyverse)
+```
+
+
+---
+## Key single table verbs/functions
+
+
+* Working with rows:
+
+  * `filter`: keep only some of the rows based on column values
+  
+  * `slice`: keep some of the rows based on their location
+  
+  * `arrange`: sort data
+
+
+* Working with columns:
+
+  * `select`: keep only some of the columns 
+
+  * `mutate` adds new columns
+  
+  * `rename` change the name of specified columns
+
+  * `relocate` changes the order of the columns
+
+
+* Groups of rows:
+
+
+  * `summarise` (and `group_by`): provide summary statistics 
+
+  
+  
+---
+## `filter`
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all penguins of the Chinstrap species?
+
+
+
+---
+## `filter`
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all penguins of the Chinstrap species?
+
+```{r eval = FALSE, message = FALSE}
+chinstrap <- filter(penguins, species == "Chinstrap")
+```
+
+
+---
+## `filter`
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all penguins of the Chinstrap species?
+
+```{r message = FALSE, fig.cap= "A tibble showing the data filtered by chinstrap."}
+chinstrap <- filter(penguins, species == "Chinstrap")
+chinstrap
+```
+
+
+---
+## `filter`
+
+#### a function for specifying which rows to keep
+
+
+Example 2: How do we get penguins that are 4 kg or greater?
+
+  
+---
+## `filter`
+
+#### a function for specifying which rows to keep
+
+
+Example 2: How do we get penguins that are 4 kg or greater?
+
+
+```{r eval = FALSE}
+penguins_4k <- filter(penguins, body_mass_g >= 4000)
+```
+---
+## `filter`
+
+#### a function for specifying which rows to keep
+
+
+Example 2: How do we get penguins that are 4 kg or greater?
+
+
+```{r, fig.cap= "A tibble applying a filter in which penguins are 4kg or greater."}
+penguins_4k <- filter(penguins, body_mass_g >= 4000)
+penguins_4k
+```
+
+
+---
+### Assessment
+
+How many penguins were found on Torgersen island (<i>Torgersen</i>)?
+
+
+  
+---
+### Assessment
+
+How many penguins were found on Torgersen island (<i>Torgersen</i>)?
+
+
+
+```{r}
+torgersen<- filter(penguins, island == "Torgersen")
+dim(torgersen)
+```
+
+--
+
+Also could have used:
+
+
+```{r}
+torgersen<- penguins %>% filter(island == "Torgersen")
+dim(torgersen)
+```
+
+
+
+
+---
+## `select`
+
+#### A function/verb for specifying which columns to keep 
+
+As of dplyr 1.0 there are 5 ways to use select 
+
+  1. By **position** 
+  
+  2. By **name**
+  
+  3. by **function of name** 
+  
+  4. by **type** 
+  
+  5. by combination of the above using logical operators (`|`, `&`, `!`)
+
+
+
+---
+### `select` by position
+
+Example: select columns 1, 3 and 5 from `penguins`
+
+--
+```{r eval = FALSE}
+penguins %>% select(1, 3, 5)
+```
+
+
+---
+### `select` by position
+
+Example: select columns 1, 3 and 5 from `penguins`
+
+```{r, fig.cap= "A tibble in which columns one, three, and five are selected."}
+penguins %>% select(1, 3, 5)
+```
+
+
+---
+### `select` by name
+
+Example: select *species*, *island* and *body_mass_g*
+
+--
+```{r eval = FALSE}
+penguins %>% select(species, island, body_mass_g)
+```
+
+---
+### `select` by name
+
+
+Example: select *species*, *island* and *body_mass_g*
+
+```{r fig.cap= "A tibble in which species are selected by the species, island, and body_mass_g variables."}
+penguins %>% select(species, island, body_mass_g)
+```
+
+---
+### `select` by a function of column names
+
+`select` can be used in conjunction with other useful functions such as:
+
+  
+  * `starts_with` 
+  
+  * `ends_with`
+  
+  * `contains` 
+  
+  * `matches`
+
+
+---
+### `select` by a function of column names
+
+
+Example: Choose all columns that contain "mm":
+
+```{r}
+penguins_mm <- penguins %>% select(contains("mm"))
+```
+
+
+---
+### `select` by a function of column names
+
+
+Example: Choose all columns that contain "mm":
+
+```{r fig.cap= "A tibble in which only includes data that contains mm in the variable names."}
+penguins_mm <- penguins %>% select(contains("mm"))
+
+penguins_mm
+```
+
+
+---
+### `select` by a function of column names
+
+
+Example: How to choose all columns starting with "bill":
+
+```{r}
+bills_df <- penguins %>% select(starts_with("bill"))
+```
+
+---
+### `select` by a function of column names
+
+
+Example: How to choose all columns starting with "bill":
+
+```{r fig.cap= "A tibble that contains only the columns starting with the word bill."}
+bills_df <- penguins %>% select(starts_with("bill"))
+
+bills_df
+```
+
+
+---
+### `select` by type 
+
+Example: choose all numeric columns:
+
+```{r eval = FALSE}
+penguins %>% select(where(is.numeric))
+```
+
+---
+### `select` by type 
+
+Example: choose all numeric columns:
+
+```{r fig.cap = "A tibble in which all numeric columns are selected."}
+penguins %>% select(where(is.numeric))
+```
+
+
+---
+### `select` by logical combination
+
+Example: choose all factor variables or variables containing the word "bill"
+
+```{r eval = FALSE}
+penguins %>% select(where(is.factor) | contains("bill"))
+```
+
+
+
+---
+### `select` by logical combination
+
+Example: choose all factor variables or variables containing the word "bill"
+
+```{r fig.cap= "A tibble in which all factor variables are seleted or contains the word bill."}
+penguins %>% select(where(is.factor) | contains("bill"))
+```
+
+
+
+
+---
+## `mutate` 
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether a penguin has a mass greater than 4 kg
+
+```{r eval = FALSE}
+penguin_extra <- penguins %>% 
+  mutate(above_4kg= if_else(body_mass_g > 4000, TRUE, FALSE))
+```
+
+
+---
+## `mutate` 
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether a penguin has a mass greater than 4 kg
+
+```{r fig.cap = "A tibble which adds a new column called above_kg, which indicates whether a penguin has a mass greater than 4kg."}
+penguin_extra <- penguins %>% 
+  mutate(above_4kg= if_else(body_mass_g > 4000, TRUE, FALSE))
+
+head(penguin_extra)
+```
+
+
+---
+## `arrange` 
+
+#### A function for sorting data
+
+Example: Sort all penguins by body mass:
+
+--
+
+```{r}
+penguins_sorted <- penguins %>% arrange(body_mass_g)
+```
+
+---
+## `arrange` 
+
+#### A function for sorting data
+
+Example: Sort all penguins by body mass:
+
+
+
+```{r eval = FALSE,fig.cap= "A data table which shows penguins sorted by ascending body mass."}
+penguins_sorted <- penguins %>% 
+  arrange(body_mass_g)
+penguins_sorted
+```
+```{r echo = FALSE}
+paged_table(penguins_sorted)
+```
+
+
+
+---
+### sorting with multiple columns using `arrange`
+
+Example sorting by species, then by descending order of mass:
+
+```{r eval = FALSE}
+penguins_sorted2 <- penguins %>% 
+  arrange(species, desc(body_mass_g))
+penguins_sorted2
+```
+```{r echo = FALSE, fig.cap = "A data table which shows penguins sorted by descending body mass."}
+penguins_sorted2 <- penguins %>% 
+  arrange(species, desc(body_mass_g))
+paged_table(penguins_sorted2)
+```
+
+
+
+
+
+---
+## `summarise`/`summarize`
+
+
+#### A verb/function to get summary statistics.
+
+
+Question: what's the mean flipper length and body mass among the Palmer penguins?
+
+
+```{r fig.cap= "A tibble that shows the mean flipper length and body mass among the Palmer penguins."}
+penguins %>% 
+  summarise(num_penguins = n(),
+            avg_mass = mean(body_mass_g, na.rm = TRUE),
+            avg_fl_length = mean(flipper_length_mm, na.rm = TRUE))
+```
+
+
+---
+## `group_by` 
+
+#### A function that makes `summarise` really powerful 
+
+`group_by` creates a grouped data frame based on columns you specify
+
+--
+
+For example, grouping the penguins by island and species:
+
+--
+
+```{r}
+gr_penguins <- penguins %>% group_by(island, species)
+```
+
+
+---
+## `group_by` 
+
+#### A function that makes `summarise` really powerful 
+
+`group_by` creates a grouped data frame based on columns you specify
+
+
+
+For example, grouping the penguins by island and species:
+
+```{r fig.cap = "A tibble that groups the penguins by island and species."}
+gr_penguins <- penguins %>% group_by(island, species)
+head(gr_penguins)
+```
+
+
+
+
+
+---
+## How is the grouped data frame different?
+
+--
+
+  * Extra information is added to the data frame 
+  
+--
+
+
+  * rows that match on all the grouping variables will be in the same group
+
+--
+  
+  * rows that don't match on all the grouping variables will be in different groups
+  
+
+
+---
+## `group_by` and `summarise` together
+
+Now let's do the same summary as before with the grouped data:
+
+--
+
+```{r fig.cap= "A tibble that shows the number of penguins by average mass, average flipper length, island, and species."}
+gr_penguins %>% summarise(num_penguins = n(),
+                       avg_mass = mean(body_mass_g, na.rm = TRUE),
+                       avg_fl_length = mean(flipper_length_mm, 
+                                            na.rm = TRUE))
+```
+
+
+---
+### New features of `summarise`
+
+`dplyr` 1.0 has some new features of `summarise`:
+
+  * summaries that return multiple values
+  
+  * summaries that return multiple columns
+  
+  
+  
+---
+### Summaries with multiple values
+
+Example: using `summarise` to get the range of bill lengths for each species of penguin:
+
+```{r fig.cap = "A tibble with two columns. The first column has each species name in two consecutive rows. The 2nd column features the minimum and maximum bill lengths for each species in alternating rows."}
+penguins %>% 
+  group_by(species) %>%
+  summarise(rng = range(bill_length_mm, na.rm = TRUE))
+
+```
+
+---
+### Summaries with multiple columns
+
+Example: using `summarise` to find the minimum and maximum mass penguin on each island:
+
+```{r fig.cap = "A tibble with three columns. The first column contains the names of the islands. The 2nd column contains the minimum mass of a penguin on the corresponding island. The 3rd column contains the maximum mass of a penguin on the island." }
+penguins %>% 
+  group_by(island) %>%
+  summarise(tibble(min_mass = min(body_mass_g, na.rm = TRUE),
+                   max_mass = max(body_mass_g, na.rm = TRUE)))
+```
+
+  
+
+
+
+---
+### So ... a couple other things about groups
+
+  * default behavior is to remove the last level of grouping after a call to `summarise` 
+  
+  * grouped data can be used with other `dplyr` verbs e.g. `mutate`
+  
+  * you can ungroup data using `ungroup`
+  
+---
+### Example using `group_by` with `mutate`
+
+What if we wanted to give each penguin a number within its species? 
+
+```{r}
+numbered_penguins <- penguins %>% 
+  group_by(species) %>%
+  mutate(penguin_num = 1:n())
+```
+
+---
+### Example using `group_by` with `mutate`
+
+What if we wanted to give each penguin a number within its species? 
+
+```{r fig.cap = "A tibble that adds the field penguin_num, which adds a number to a penguin within its species. In addition, the tibble contains information about the species, island, bill length, bill depth, flipper length, and body mass." }
+numbered_penguins <- penguins %>% 
+  group_by(species) %>%
+  mutate(penguin_num = 1:n())
+
+numbered_penguins
+```
+
+
+
+---
+## `rename`
+
+#### A function/verb to rename columns
+
+Works like `select`
+
+
+Example: renaming by position
+
+```{r fig.cap = "A tibble that renames column three and four to bill_length and bill_depth. In addition, the tibble shows species, island, flipper length, body mass, and sex."}
+penguins_different <- penguins %>% rename(bill_length = 3, 
+                                          bill_depth = 4)
+
+penguins_different
+```
+
+
+
+---
+### `rename_with`
+
+`rename_with` can be used with a specified transformation (and optionally with a column selection). 
+
+
+Example: rename all columns to be uppercase
+
+```{r fig.cap = "A tibble that renames the columns, species, island, bill length, bill depth, flipper length, and body mass to uppercase characters."}
+penguins %>% rename_with(toupper)
+```
+
+
+
+---
+## `rename_with`
+```{r fig.cap= "This tibble shows column names that are only capitalized to uppercase when the columns contain numeric values."}
+penguins %>% rename_with(toupper, where(is.numeric))
+```
+
+
+
+---
+## `relocate`
+
+### A function 
+
+
+  * (**default**) move selected variables to the front
+  
+  * move selected columns before a specified location
+  
+  * move selected columns after a specified location
+
+
+
+---
+## `relocate` examples
+
+Example: bring all the factor variables to the front 
+
+```{r eval = FALSE}
+penguins %>% relocate(where(is.factor))
+```
+
+
+---
+## `relocate` examples
+
+Example: bring all the factor variables to the front 
+
+```{r fig.cap = "This tibble brings all the factor variables, which are species, island, and sex, to the front of the tibble."}
+penguins %>% relocate(where(is.factor))
+```
+
+
+
+---
+## `relocate` examples
+
+Example: relocate all factor variables after *body_mass_g*  
+
+
+```{r fig.cap= "This tibble relocates all factor variables to the front after the  body_mass_g column"}
+penguins %>% relocate(contains("bill"), .after = body_mass_g)
+```
+
+
+---
+### `across`: a really useful new function
+
+What if you wanted the average value - per group - of each numeric column? 
+
+
+
+Annoying way: 
+
+```{r eval = FALSE}
+penguins %>% group_by(species) %>% 
+  summarise(avg_bill_length = mean(bill_length_mm, na.rm = TRUE),
+            avg_bill_depth = mean(bill_depth_mm, na.rm = TRUE), 
+            avg_fl_length_mm = mean(flipper_length_mm, na.rm = TRUE),
+            avg_body_mass_g = mean(body_mass_g, na.rm = TRUE))
+```
+
+
+---
+### `across`: a really useful new function
+
+What if you wanted the average value - per group - of each numeric column? 
+
+
+
+Annoying way: 
+
+```{r fig.cap = "This tibble shows the average values of bill length, bill depth, flipper length, and body mass."}
+penguins %>% group_by(species) %>% 
+  summarise(avg_bill_length = mean(bill_length_mm, na.rm = TRUE),
+            avg_bill_depth = mean(bill_depth_mm, na.rm = TRUE), 
+            avg_fl_length_mm = mean(flipper_length_mm, na.rm = TRUE),
+            avg_body_mass_g = mean(body_mass_g, na.rm = TRUE))
+```
+
+
+---
+### `across`: a really useful new function
+
+What if you wanted the average value - per group - of each numeric column? 
+
+
+Neater/better way: 
+
+```{r eval = FALSE}
+penguins %>% group_by(species) %>%
+  summarise(across(where(is.numeric) & !contains("year"),
+                   mean, na.rm = TRUE))
+```
+
+---
+### `across`: a really useful new function
+
+What if you wanted the average value - per group - of each numeric column? 
+
+
+Neater/better way: 
+
+```{r fig.cap = "A tibble which uses the across function to calculate the average values of bill length, bill depth, flipper length, and body mass."}
+penguins %>% group_by(species) %>%
+  summarise(across(where(is.numeric) & !contains("year"),
+                   mean, na.rm = TRUE))
+```
+
+
+---
+### `across`: a closer look
+
+
+`across` has two primary arguments:
+
+  * <tt>.cols</tt> selects the columns you want to operate on
+  
+  * <tt>.fns</tt> is a function or list of functions that you want to apply
+     
+     * can be a `purrr` style formula 
+  
+
+
+
+---
+### multiple summaries with `across`
+
+Example: For each island, what is the average of all numeric variables and the count of all factor variables?
+
+```{r fig.cap= "A tibble which shows the mean of all the values along with the count of all the factor variables."}
+penguins %>%
+  group_by(island) %>% 
+  summarise(
+    across(where(is.numeric), mean, na.rm = TRUE), 
+    across(where(is.factor), n_distinct),
+    n = n(), 
+  )
+```
+
+
+---
+### `across` example with `filter`
+
+Example: get all rows without missing values:
+
+
+```{r}
+penguins_complete <- penguins %>% 
+  filter(across(everything(), ~ !is.na(.x)))
+```
+
+--
+
+Is that any different to?
+
+```{r eval = FALSE}
+penguins_complete2 <- penguins %>% 
+  filter(across(everything(), complete.cases))
+```
+
+
+---
+### `across` example with `distinct`
+
+All combinations of variables meeting specified criteria using `distinct`
+
+```{r fig.cap = "A tibble that shows the distinct combinations across variables which are factors which are species, island, and sex."}
+penguins %>% distinct(across(is.factor, sort = TRUE))
+```
+
+---
+### `across` example with `count`
+
+Counts of all combinations of variables meeting specified criteria using `count`
+
+```{r fig.cap = "A tibble that gives the counts of all combinations of variables that are factors." }
+penguins %>% count(across(is.factor, sort = TRUE))
+```
+
+---
+### `across` example with `mutate`
+
+Using `across` with `mutate` to rescale all numeric variables between 0 and 1
+
+
+```{r fig.cap= "A tibble which rescale all the numeric variables between 0 and 1."}
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+
+penguins_rescaled <- penguins %>% 
+  mutate(across(where(is.numeric), rescale01))
+
+penguins_rescaled
+```
+
+
+---
+## Row-wise operations
+
+Question: what if we wanted to create a new column that was the average of the <i>bill_depth_mm</i> and <i>bill_length_mm</i> variables?
+
+You might try:
+```{r eval = FALSE}
+penguins %>% select(contains("bill")) %>% 
+  mutate(avg = mean(c(bill_length_mm, bill_depth_mm), na.rm = TRUE))
+```
+---
+## Row-wise operations
+
+Question: what if we wanted to create a new column that was the average of the <i>bill_depth_mm</i> and <i>bill_length_mm</i> variables?
+
+You might try:
+```{r fig.cap="a tibble showing a new column of calculated means but all the values are the same in the new variable"}
+penguins %>% select(contains("bill")) %>% 
+  mutate(avg = mean(c(bill_length_mm, bill_depth_mm), na.rm = TRUE))
+```
+
+
+---
+### Using `rowwise`
+
+We can use `rowwise` prior to mutate instead 
+
+```{r eval = FALSE}
+penguins %>% 
+  select(contains("bill")) %>%
+  rowwise() %>% 
+  mutate(avg = mean(c(bill_length_mm, bill_depth_mm), na.rm = TRUE))
+```
+
+
+---
+### Using `rowwise`
+
+We can use `rowwise` prior to mutate instead 
+
+```{r fig.cap = "A tibble showing a new column correctly displaying the mean for each row within the row"}
+penguins %>% 
+  select(contains("bill")) %>%
+  rowwise() %>% 
+  mutate(avg = mean(c(bill_length_mm, bill_depth_mm), na.rm = TRUE))
+```
+
+
+---
+## Joins
+
+
+To illustrate the join functions, we will use two small data sets
+
+First, a data frame containing the populations of 8 countries (via census.gov): 
+
+```{r fig.cap = "A tibble showing the names and populations of 8 countries"}
+populations <- readr::read_csv("data/populations.csv")
+populations
+```
+
+---
+## Joins
+
+Next, a data frame containing the land areas of some countries (via wikipedia)
+
+
+```{r fig.cap = "A tibble showing the names and land areas of 7 countries"}
+areas <- readr::read_csv("data/areas.csv")
+areas
+```
+Note that some countries are in both data frames while others are only in one.
+
+---
+### Inner joins with `inner_join`
+
+Inner joins combine tables, taking only entries that are in both:
+
+```{r fig.cap = "A tibble showing the names, areas and populations of 5 countries"}
+inner_join(populations, areas)
+```
+
+
+
+---
+### Full joins with `full_join`
+
+Full joins combine tables, taking all entries from either:
+
+```{r fig.cap = "A tibble showing the names, populations and areas of 10 countries with some values missing"}
+full_join(populations, areas)
+```
+
+---
+### Left (or right) joins with `left_join` (or `right_join`)
+
+Left joins take all the rows in the first table along with any rows in the second table that match
+
+```{r fig.cap = "A tibble showing the names, populations and areas of 8 countries. 3 values are missing in the area column."}
+left_join(populations, areas)
+```
